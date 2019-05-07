@@ -1,0 +1,193 @@
+﻿@model IEnumerable<thousand.Models.Sale>
+@{
+    ViewBag.Title = "Gridview";
+}
+
+<h2>Gridview</h2>
+@*/* RR grid view with search option*/*@
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#bttnSearch').click(function () {
+            var RName = $('#txtName').attr('value');
+            $.ajax({
+                type: "post",
+                url: "/Emp/PersonGrid",
+                data: { Region: $('#txtName').attr('value') },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    // debugger
+                    if (data == "No Record Found") {
+                        alert('No Record Found');
+                    }
+                    else {
+                        $('#gridContent').html(data);
+                        $('#txtName').val(RName);
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+<div id="grid">
+    <table width="100%">
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            Name
+                        </td>
+                        <td>
+                            <input type="text" id="txtName" />
+                        </td>
+                        <td>
+                            <input type="button" id="bttnSearch" value="Search" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+                @{
+        var grid = new WebGrid(Model, canPage: true, rowsPerPage: 500,
+        selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+        grid.Pager(WebGridPagerModes.All);
+                }
+
+
+                @grid.GetHtml(tableStyle: "webGrid",
+headerStyle: "header",
+                alternatingRowStyle: "alt",
+                selectedRowStyle: "select",
+                columns: grid.Columns(
+                grid.Column("Region", "Region"),
+                grid.Column("Country", "Country"),
+             grid.Column("ItemType", "ItemType"),
+            grid.Column("SalesChannel", "SalesChannel"),
+                grid.Column("OrderPriority", "OrderPriority"),
+                grid.Column("SalesChannel", "SalesChannel"),
+                grid.Column("OrderDate", "OrderDate"),
+                grid.Column("OrderId", "OrderId"),
+                grid.Column("Shipdate", "Shipdate"),
+                grid.Column("UnitsSold", "UnitsSold"),
+                grid.Column("UnitPrice", "UnitPrice"),
+                grid.Column("UnitCost", "UnitCost"),
+                grid.Column("TotalRevenue", "TotalRevenue"),
+                grid.Column("TotalCost", "TotalCost"),
+                grid.Column("TotalProfit", "TotalProfit"))
+                )
+
+            </td>
+        </tr>
+        
+    </table>
+</div>
+
+@*<table class="table table-bordered table-striped mt10 dataTable" id="SearchResults">*@
+@*<table class="table">*@
+    @*<tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Region)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SalesChannel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderPriority)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Shipdate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnitsSold)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnitPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnitCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalRevenue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalProfit)
+        </th>
+        <th></th>
+    </tr>*@
+
+    @*@foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Region)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalesChannel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderPriority)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Shipdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitsSold)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalRevenue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalProfit)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }*@
+
+@*</table>*@
